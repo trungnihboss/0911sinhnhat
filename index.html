@@ -75,20 +75,12 @@
     .birthday p {
       font-size: 18px;
       margin: 5px 0;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: typeText 0.6s ease-out forwards;
     }
-    .birthday p:nth-child(2) { animation-delay: 0s; }
-    .birthday p:nth-child(3) { animation-delay: 0.5s; }
-    .birthday p:nth-child(4) { animation-delay: 1s; }
-
     .cake-container {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
     .button {
       background-color: #ff1493;
       color: white;
@@ -99,21 +91,9 @@
       border: none;
       margin-bottom: 10px;
     }
-    .button:hover {
-      background-color: #d40b7f;
-    }
-
     .cake {
       width: 150px;
     }
-
-    @keyframes typeText {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .balloon {
       width: 40px;
       height: 60px;
@@ -121,7 +101,7 @@
       border-radius: 50% 50% 45% 45%;
       position: absolute;
       bottom: -100px;
-      animation: floatUp 6s ease-in forwards;
+      animation: floatUp 6s linear forwards;
     }
     .balloon::after {
       content: '';
@@ -136,55 +116,20 @@
     @keyframes floatUp {
       to {
         transform: translateY(-110vh) rotate(10deg);
+        opacity: 0;
       }
     }
-
-    .heart {
-      width: 150px;
-      height: 130px;
-      position: relative;
-      margin: 30px auto;
-      animation: pulse 1s infinite;
-      display: none;
-    }
-    .heart::before, .heart::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: red;
-      border-radius: 50px 50px 0 0;
-      top: 0;
-    }
-    .heart::before {
-      left: 50px;
-      transform: rotate(-45deg);
-      transform-origin: 0 100%;
-    }
-    .heart::after {
-      left: 0;
-      transform: rotate(45deg);
-      transform-origin: 100% 100%;
-    }
-    .heart-text {
-      position: absolute;
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    .final-text {
+      font-size: 24px;
       color: white;
-      font-size: 12px;
-      text-align: center;
       font-weight: bold;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      margin-top: 20px;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-<!-- Màn hình nhập mật khẩu -->
 <div class="screen active" id="loginScreen">
   <div class="login-box">
     <img src="img1.jpg" alt="Avatar" class="avatar">
@@ -207,33 +152,26 @@
   </div>
 </div>
 
-<!-- Màn hình chúc mừng sinh nhật -->
 <div class="screen" id="birthdayScreen">
   <div class="birthday">
     <h1>🎂 <strong>Chúc mừng sinh nhật!</strong> 🎉</h1>
     <p>Chúc mừng sinh nhật người con gái tuyệt vời nhất cuộc đời anh!</p>
     <p>Anh mong em luôn mạnh khỏe, luôn rạng rỡ và hạnh phúc.</p>
     <p>Anh sẽ luôn cố gắng để...</p>
-
     <div class="cake-container">
       <button class="button" onclick="showSurprise()">Mở quà bất ngờ 🎁</button>
       <img src="cake.jpg" alt="Bánh sinh nhật" class="cake">
     </div>
-
-    <div class="heart" id="heart">
-      <div class="heart-text">Chúc mừng sinh nhật<br>Trần Anh Thư</div>
-    </div>
+    <div class="final-text" id="finalText">Chúc mừng sinh nhật Trần Anh Thư</div>
   </div>
 </div>
 
 <script>
   let password = '';
-
   function pressKey(val) {
     const input = document.getElementById('password');
-    if (val === 'x') {
-      password = password.slice(0, -1);
-    } else if (val === '✓') {
+    if (val === 'x') password = password.slice(0, -1);
+    else if (val === '✓') {
       if (password === '0911') {
         document.getElementById('loginScreen').classList.remove('active');
         document.getElementById('birthdayScreen').classList.add('active');
@@ -248,14 +186,23 @@
   }
 
   function showSurprise() {
-    for (let i = 0; i < 100; i++) {
+    const total = 100;
+    let finished = 0;
+    for (let i = 0; i < total; i++) {
       const balloon = document.createElement('div');
       balloon.className = 'balloon';
       balloon.style.left = Math.random() * 100 + 'vw';
       balloon.style.animationDelay = (Math.random() * 3) + 's';
       document.body.appendChild(balloon);
+
+      balloon.addEventListener('animationend', () => {
+        balloon.remove();
+        finished++;
+        if (finished === total) {
+          document.getElementById('finalText').style.display = 'block';
+        }
+      });
     }
-    document.getElementById('heart').style.display = 'block';
   }
 </script>
 
