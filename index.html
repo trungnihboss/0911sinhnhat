@@ -64,7 +64,7 @@
       background-color: #ff1493;
     }
 
-    /* Sinh nhật giao diện */
+    /* Giao diện chúc mừng sinh nhật */
     .birthday {
       color: #d63384;
       text-align: center;
@@ -171,7 +171,18 @@
     <h3>Sinh Nhật của em 🎂</h3>
     <input type="password" class="password-input" id="password" placeholder="Nhập mật khẩu">
     <div class="numpad">
-      ${[1,2,3,4,5,6,7,8,9,'x',0,'✓'].map(val => `<button onclick="pressKey('${val}')">${val}</button>`).join('')}
+      <button onclick="pressKey('1')">1</button>
+      <button onclick="pressKey('2')">2</button>
+      <button onclick="pressKey('3')">3</button>
+      <button onclick="pressKey('4')">4</button>
+      <button onclick="pressKey('5')">5</button>
+      <button onclick="pressKey('6')">6</button>
+      <button onclick="pressKey('7')">7</button>
+      <button onclick="pressKey('8')">8</button>
+      <button onclick="pressKey('9')">9</button>
+      <button onclick="pressKey('x')">⌫</button>
+      <button onclick="pressKey('0')">0</button>
+      <button onclick="pressKey('✓')">✓</button>
     </div>
   </div>
 </div>
@@ -184,7 +195,7 @@
     <p style="animation-delay: 0.5s;">Anh mong em luôn mạnh khỏe, luôn rạng rỡ và hạnh phúc.</p>
     <p style="animation-delay: 1s;">Anh sẽ luôn cố gắng để...</p>
     <button class="button" onclick="showSurprise()">Mở quà bất ngờ 🎁</button>
-    <img src="cake.jpg" alt="Bánh sinh nhật">
+    <img src="cake.jpg" alt="Bánh sinh nhật" class="cake">
     <div class="heart" id="heart"></div>
   </div>
 </div>
